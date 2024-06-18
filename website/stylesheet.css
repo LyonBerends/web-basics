@@ -1,0 +1,77 @@
+
+* {
+    font-family: "Source Sans Pro", "Arial", sans-serif;
+}
+
+head {
+
+}
+
+body {
+    background-color: #F4F1DE;
+    margin: 0px;
+}
+
+.header {
+    background-color: #3D405B;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    float: left;
+    height: 3em;
+    border-bottom: 0.2em solid #81B29A;
+}
+
+.header > button {
+    background-color: #E07A5F;
+    border: none;
+    border-right: 0.2em solid #81B29A;
+    margin: 0;
+    height: 100%;
+    width: 6em;
+    float: left;
+}
+
+.header > button > a {
+    color: #F2CC8F;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0px;
+    margin: 0px;
+}
+
+body > h1 {
+    text-align: center;
+    color: #E07A5F;
+}
+
+.recommended_albums {
+    margin: auto;
+    width: 50%;
+    border: 0.3em solid #E07A5F;
+    background-color: #F2CC8F;
+    padding: 1em;
+}
+
+.recommended_albums > h1 {
+    color: #3D405B;
+    margin: auto;
+    width: 50%;
+    text-align: center;
+}
+
+.recommended_albums > div > img {
+    width: 8em;
+    height: 8em;
+    margin: 0.5em;
+    padding: 0px;
+    border: 0.2em solid #E07A5F;
+}
+
+.recommended_albums > div > span {
+    width: 8em;
+    margin-left: 0.7em;
+    margin-right: 1em;
+    float: left;
+}
