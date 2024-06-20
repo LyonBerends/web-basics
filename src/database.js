@@ -1,41 +1,6 @@
 const Database = require('better-sqlite3');
 const db = new Database('database.db', { verbose: console.log });
 
-exports.get_artist = {
-    from_id : function(id) {
-        const stmt = db.prepare("SELECT * FROM Artist WHERE artist_id = ?");
-        return stmt.get(id);
-    },
-    from_name : function(name) {
-        const stmt = db.prepare("SELECT * FROM Artist WHERE name = ?");
-        return stmt.get(name);
-    },
-    all : function() {
-        return db.prepare("SELECT * FROM Artist").all();
-    }
-};
-
-exports.delete_artist = function(id) {
-    if(db.prepare("SELECT count(*) count FROM Artist WHERE artist_id = ?").get(id)["count"] === 0) {return 404;}
-    const stmt = db.prepare("DELETE FROM Artist WHERE artist_id = ?");
-    stmt.run(id);
-    return 200;
-}
-
-exports.delete_album = function(id) {
-    if(db.prepare("SELECT count(*) count FROM Album WHERE album_id = ?").get(id)["count"] === 0) {return 404;}
-    const stmt = db.prepare("DELETE FROM Album WHERE album_id = ?");
-    stmt.run(id);
-    return 200;
-}
-
-exports.delete_song = function(id) {
-    if(db.prepare("SELECT count(*) count FROM Song WHERE song_id = ?").get(id)["count"] === 0) {return 404;}
-    const stmt = db.prepare("DELETE FROM Song WHERE song_id = ?");
-    stmt.run(id);
-    return 200;
-}
-
 exports.new_artist = function(name, icon="missing.png") {
     try {
         const stmt = db.prepare("INSERT INTO Artist (name, icon) VALUES (?, ?)");
@@ -68,6 +33,88 @@ exports.new_song = function(name, duration, album_id, lyrics = "null", icon="mis
         return e;
     }
 }
+
+exports.edit_artist = function(id, name, icon=null) {
+    if(db.prepare("SELECT count(*) count FROM Artist WHERE artist_id = ?").get(id)["count"] === 0) {return 404;}
+    if(icon === null) {
+        db.prepare("UPDATE Artist SET name = ? WHERE artist_id = ?").run(name, id);
+    } else {
+        db.prepare("UPDATE Artist SET name = ?, icon = ? WHERE artist_id = ?").run(name, icon, id);
+    }
+    return db.prepare("SELECT * FROM Artist WHERE artist_id = ?").get(id);
+}
+
+exports.edit_album = function(id, name, release_date=null, icon=null, artist_id=null) {
+    if(db.prepare("SELECT count(*) count FROM Album WHERE album_id = ?").get(id)["count"] === 0) {return 404;}
+    if(release_date === null) {
+        db.prepare("UPDATE Album SET name = ? WHERE album_id = ?").run(name, id);
+    }
+    else if(icon === null) {
+        db.prepare("UPDATE Album SET name = ?, release_date = ? WHERE artist_id = ?").run(name, release_date, id);
+    }
+    else if(artist_id === null) {
+        db.prepare("UPDATE Album SET name = ?, release_date = ?, icon = ? WHERE artist_id = ?").run(name, release_date, icon, id);
+    }
+    else {
+        db.prepare("UPDATE Album SET name = ?, release_date = ?, icon = ?, artist_id = ? WHERE album_id = ?").run(name, release_date, icon, artist_id, id);
+    }
+    return db.prepare("SELECT * FROM Artist WHERE artist_id = ?").get(id);
+}
+
+exports.edit_song = function(id, name, lyrics=null, duration=null, icon=null, album_id=null) {
+    if(db.prepare("SELECT count(*) count FROM Song WHERE song_id = ?").get(id)["count"] === 0) {return 404;}
+    if(lyrics === null) {
+        db.prepare("UPDATE Song SET name = ? WHERE song_id = ?").run(name, id);
+    }
+    else if(duration === null) {
+        db.prepare("UPDATE SONG SET name = ?, lyrics = ? WHERE song_id = ?").run(name, lyrics, id);
+    }
+    else if(icon === null) {
+        db.prepare("UPDATE SONG SET name = ?, lyrics = ?, duration = ? WHERE song_id = ?").run(name, lyrics, duration, id);
+    }
+    else if(album_id === null) {
+        db.prepare("UPDATE SONG SET name = ?, lyrics = ?, duration = ?, icon = ? WHERE song_id = ?").run(name, lyrics, duration, icon, id);
+    }
+    else {
+        db.prepare("UPDATE SONG SET name = ?, lyrics = ?, duration = ?, icon = ?, album_id = ? WHERE song_id = ?").run(name, lyrics, duration, icon, album_id, id);
+    }
+    return db.prepare("SELECT * FROM Artist WHERE artist_id = ?").get(id);
+}
+
+exports.delete_artist = function(id) {
+    if(db.prepare("SELECT count(*) count FROM Artist WHERE artist_id = ?").get(id)["count"] === 0) {return 404;}
+    const stmt = db.prepare("DELETE FROM Artist WHERE artist_id = ?");
+    stmt.run(id);
+    return 200;
+}
+
+exports.delete_album = function(id) {
+    if(db.prepare("SELECT count(*) count FROM Album WHERE album_id = ?").get(id)["count"] === 0) {return 404;}
+    const stmt = db.prepare("DELETE FROM Album WHERE album_id = ?");
+    stmt.run(id);
+    return 200;
+}
+
+exports.delete_song = function(id) {
+    if(db.prepare("SELECT count(*) count FROM Song WHERE song_id = ?").get(id)["count"] === 0) {return 404;}
+    const stmt = db.prepare("DELETE FROM Song WHERE song_id = ?");
+    stmt.run(id);
+    return 200;
+}
+
+exports.get_artist = {
+    from_id : function(id) {
+        const stmt = db.prepare("SELECT * FROM Artist WHERE artist_id = ?");
+        return stmt.get(id);
+    },
+    from_name : function(name) {
+        const stmt = db.prepare("SELECT * FROM Artist WHERE name = ?");
+        return stmt.get(name);
+    },
+    all : function() {
+        return db.prepare("SELECT * FROM Artist").all();
+    }
+};
 
 exports.get_album = {
     from_id : function(id) {

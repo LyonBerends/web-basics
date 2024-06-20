@@ -27,9 +27,9 @@ app.get('/api/songs/:query', (req, res) => {
 app.post('/api/artists', (req, res) => {
   if(req.headers['content-type'] === 'json' || req.headers['content-type'] === 'application/json') {
     const name = req.body["name"];
-    const image = req.body["image"];
+    const icon = req.body["icon"];
     if(!name) { return res.sendStatus(400); }
-    res.send(db.new_artist(name, image));
+    res.send(db.new_artist(name, icon));
   }
   else
   {
@@ -41,9 +41,9 @@ app.post('/api/albums', (req, res) => {
   if(req.headers['content-type'] === 'json' || req.headers['content-type'] === 'application/json') {
     const name = req.body["name"];
     const artist_id = req.body["artist_id"];
-    const image = req.body["image"];
+    const icon = req.body["icon"];
     if(!name || !artist_id) { return res.sendStatus(400); }
-    res.send(db.new_album(name, artist_id, image));
+    res.send(db.new_album(name, artist_id, icon));
   }
   else
   {
@@ -57,9 +57,9 @@ app.post('/api/songs', (req, res) => {
     const duration = req.body["duration"];
     const album_id = req.body["album_id"];
     const lyrics = req.body["lyrics"];
-    const image = req.body["image"];
-    if(!name || !artist_id) { return res.sendStatus(400); }
-    res.send(db.new_song(name, duration, album_id, lyrics, image));
+    const icon = req.body["icon"];
+    if(!name || !album_id || !duration) { return res.sendStatus(400); }
+    res.send(db.new_song(name, duration, album_id, lyrics, icon));
   }
   else
   {
@@ -67,8 +67,42 @@ app.post('/api/songs', (req, res) => {
   }
 });
 
-app.put('/api', (req, res) => {
-  res.send('Got a PUT request at /user')
+app.put('/api/artists/:query', (req, res) => {
+  if(req.headers['content-type'] === 'json' || req.headers['content-type'] === 'application/json') {
+    const artist_id = req.params.query;
+    const name = req.body["name"];
+    const icon = req.body["icon"];
+    const ret = db.edit_artist(artist_id, name, icon);
+    if(ret === 404) {res.sendStatus(404);}
+    else {res.send(ret);}
+  }else {res.sendStatus(400);}
+});
+
+app.put('/api/albums/:query', (req, res) => {
+  if(req.headers['content-type'] === 'json' || req.headers['content-type'] === 'application/json') {
+    const album_id = req.params.query;
+    const name = req.body["name"];
+    const release_date = req.body["release_date"];
+    const icon = req.body["icon"];
+    const artist_id = req.body["artist_id"];
+    const ret = db.edit_album(album_id, name, release_date, icon, artist_id);
+    if(ret === 404) {res.sendStatus(404);}
+    else {res.send(ret);}
+  }else {res.sendStatus(400);}
+});
+
+app.put('/api/songs/:query', (req, res) => {
+  if(req.headers['content-type'] === 'json' || req.headers['content-type'] === 'application/json') {
+    const song_id = req.params.query;
+    const name = req.body["name"];
+    const duration = req.body["duration"];
+    const lyrics = req.body["lyrics"];
+    const icon = req.body["icon"];
+    const album_id = req.body["album_id"];
+    const ret = db.edit_song(song_id, name, lyrics, duration, icon, album_id);
+    if(ret === 404) {res.sendStatus(404);}
+    else {res.send(ret);}
+  }else {res.sendStatus(400);}
 });
 
 app.delete('/api/artists/:query', (req, res) => {
