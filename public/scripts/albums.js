@@ -28,8 +28,6 @@ async function get_albums() {
 
         album_container.appendChild(div);
 
-        console.log(album);
-
         i++
     }
 }

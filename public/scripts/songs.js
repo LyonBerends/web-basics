@@ -28,8 +28,6 @@ async function get_songs() {
 
         songs_container.appendChild(div);
 
-        console.log(song);
-
         i++
     }
 }

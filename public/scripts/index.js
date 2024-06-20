@@ -18,8 +18,6 @@ async function get_recommended_albums() {
         div.appendChild(span);
 
         album_container.appendChild(div);
-
-        console.log(album);
     }
 }
 

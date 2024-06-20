@@ -28,8 +28,6 @@ async function get_artists() {
 
         artists_container.appendChild(div);
 
-        console.log(artist);
-
         i++
     }
 }
