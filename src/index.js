@@ -10,18 +10,40 @@ app.use('/images', express.static('../images'));
 app.use(express.json());
 
 app.get('/api/artists/:query', (req, res) => {
-  const artist = db.get_artist.from_id(req.params.query);
-  res.send(artist);
+  if(req.params.query === "recommended") {
+    res.send(db.get_artist.all(8))
+  } else if(req.params.query === "all") {
+    res.send(db.get_artist.all())
+  }
+  else {
+    const artist = db.get_artist.from_id(req.params.query);
+    res.send(artist);
+  }
 });
 
 app.get('/api/albums/:query', (req, res) => {
-  const album = db.get_album.from_id(req.params.query);
-  res.send(album);
+  if(req.params.query === "recommended") {
+    res.send(db.get_album.all(8))
+  } else if(req.params.query === "all") {
+    res.send(db.get_album.all())
+  }
+  else
+  {
+    const album = db.get_album.from_id(req.params.query);
+    res.send(album);
+  }
 });
 
 app.get('/api/songs/:query', (req, res) => {
-  const song = db.get_song.from_id(req.params.query);
-  res.send(song);
+  if(req.params.query === "recommended") {
+    res.send(db.get_song.all(8))
+  } else if(req.params.query === "all") {
+    res.send(db.get_song.all())
+  }
+  else {
+    const song = db.get_song.from_id(req.params.query);
+    res.send(song);
+  }
 });
 
 app.post('/api/artists', (req, res) => {

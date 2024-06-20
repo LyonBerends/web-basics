@@ -12,7 +12,7 @@ body {
     margin: 0px;
 }
 
-.header {
+header {
     background-color: #3D405B;
     width: 100%;
     position: sticky;
@@ -23,7 +23,7 @@ body {
     border-bottom: 0.2em solid #81B29A;
 }
 
-.header > button {
+header > button {
     background-color: #E07A5F;
     border: none;
     border-right: 0.2em solid #81B29A;
@@ -33,7 +33,7 @@ body {
     float: left;
 }
 
-.header > button > a {
+header > button > a {
     color: #F2CC8F;
     text-decoration: none;
     font-weight: bold;
@@ -46,32 +46,37 @@ body > h1 {
     color: #E07A5F;
 }
 
-.recommended_albums {
+.flex-container {
+    width: 80%;
+    align-self: center;
     margin: auto;
-    width: 50%;
+    display: flex;
+    flex-wrap: nowrap;
     border: 0.3em solid #E07A5F;
     background-color: #F2CC8F;
+}
+
+.flex-container > div {
+    width: 10em;
+    margin: 1em;
+    text-align: center;
+    font-size: 1em;
+}
+
+.flex-container > div > span {
+    margin: 0px;
+    padding: 0px;
+    display: block;
+    color: #3D405B;
+}
+
+.flex-container > h1 {
+    margin: auto;
+    vertical-align: top;
+    display: block;
     padding: 1em;
 }
 
-.recommended_albums > h1 {
-    color: #3D405B;
-    margin: auto;
-    width: 50%;
-    text-align: center;
-}
-
-.recommended_albums > div > img {
-    width: 8em;
-    height: 8em;
-    margin: 0.5em;
-    padding: 0px;
-    border: 0.2em solid #E07A5F;
-}
-
-.recommended_albums > div > span {
-    width: 8em;
-    margin-left: 0.7em;
-    margin-right: 1em;
-    float: left;
+.flex-container > div > img {
+    width: 100%;
 }

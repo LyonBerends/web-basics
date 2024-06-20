@@ -111,8 +111,8 @@ exports.get_artist = {
         const stmt = db.prepare("SELECT * FROM Artist WHERE name = ?");
         return stmt.get(name);
     },
-    all : function() {
-        return db.prepare("SELECT * FROM Artist").all();
+    all : function(limit=999) {
+        return db.prepare(`SELECT * FROM Artist LIMIT ${limit}`).all();
     }
 };
 
@@ -129,8 +129,8 @@ exports.get_album = {
         const stmt = db.prepare("SELECT * FROM Album WHERE artist_id = ?");
         return stmt.all(artist_id);
     },
-    all : function() {
-        return db.prepare("SELECT * FROM Album").all();
+    all : function(limit=999) {
+        return db.prepare(`SELECT * FROM Album LIMIT ${limit}`).all();
     }
 }
 
@@ -147,7 +147,7 @@ exports.get_song = {
         const stmt = db.prepare("SELECT * FROM Song WHERE album_id = ?");
         return stmt.all(album_id);
     },
-    all : function() {
-        return db.prepare("SELECT * FROM Song").all();
+    all : function(limit=999) {
+        return db.prepare(`SELECT * FROM Song LIMIT ${limit}`).all();
     }
 }
