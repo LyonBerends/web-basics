@@ -1,23 +1,50 @@
 const host = window.location.origin.slice(0, window.location.origin.length - window.location.port.length) + "3000";
 
-const album_container = document.getElementById("albums");
+let container = document.getElementById("albums");
 
 async function get_recommended_albums() {
-    let recommended_albums = await fetch(`${host}/api/albums/recommended`);
-    let json = await recommended_albums.json();
+    const recommended_albums = await fetch(`${host}/api/albums/recommended`);
+    const recommended_albums_json = await recommended_albums.json();
 
-    for (let album of json) {
+    const recommended_artists = await fetch(`${host}/api/artists/recommended`);
+    const recommended_artists_json = await recommended_artists.json();
+
+    for (let album of recommended_albums_json) {
         const div = document.createElement("div");
         const image = document.createElement("img");
         const span = document.createElement("span");
+        const a = document.createElement("a");
 
         image.src = "images/" + album["icon"];
         span.innerText = album["name"];
 
-        div.appendChild(image);
-        div.appendChild(span);
+        a.href = "./albums/" + album["album_id"];
 
-        album_container.appendChild(div);
+        a.appendChild(span);
+        div.appendChild(image);
+        div.appendChild(a);
+
+        container.appendChild(div);
+    }
+
+    container = document.getElementById("artists");
+
+    for (let artist of recommended_artists_json) {
+        const div = document.createElement("div");
+        const image = document.createElement("img");
+        const span = document.createElement("span");
+        const a = document.createElement("a");
+
+        image.src = "images/" + artist["icon"];
+        span.innerText = artist["name"];
+
+        a.href = "./artists/" + artist["artist_id"];
+
+        a.appendChild(span);
+        div.appendChild(image);
+        div.appendChild(a);
+
+        container.appendChild(div);
     }
 }
 

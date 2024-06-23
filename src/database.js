@@ -1,5 +1,5 @@
 const Database = require('better-sqlite3');
-const db = new Database('database.db', { verbose: console.log });
+const db = new Database('database.db');
 
 exports.new_artist = function(name, icon="missing.png") {
     try {
@@ -12,10 +12,10 @@ exports.new_artist = function(name, icon="missing.png") {
     }
 }
 
-exports.new_album = function(name, artist_id, icon="missing.png") {
+exports.new_album = function(name, artist_id, icon="missing.png", release_date="null") {
     try {
-        const stmt = db.prepare("INSERT INTO Album (artist_id, name, icon) VALUES (?, ?, ?)");
-        stmt.run(artist_id, name, icon);
+        const stmt = db.prepare("INSERT INTO Album (artist_id, name, icon, release_date) VALUES (?, ?, ?)");
+        stmt.run(artist_id, name, icon, release_date);
         return db.prepare("SELECT * FROM Album ORDER BY album_id DESC limit 1").get();
     }
     catch (e) {

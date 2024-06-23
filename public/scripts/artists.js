@@ -16,15 +16,18 @@ async function get_artists() {
             document.body.appendChild(document.createElement("br"));
             artists_container = div;
         }
+        const a = document.createElement("a");
         const div = document.createElement("div");
         const image = document.createElement("img");
         const span = document.createElement("span");
 
+        a.href = "./artists/" + artist["artist_id"];
         image.src = "images/" + artist["icon"];
         span.innerText = artist["name"];
 
+        a.appendChild(span);
         div.appendChild(image);
-        div.appendChild(span);
+        div.appendChild(a);
 
         artists_container.appendChild(div);
 

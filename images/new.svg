@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f4f1de;
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        fill: #3e405b;
+        font-family: 0xProtoNF-Regular, '0xProto Nerd Font';
+        font-size: 512px;
+      }
+
+      .cls-3 {
+        fill: none;
+        stroke: #3e405b;
+        stroke-miterlimit: 10;
+        stroke-width: 24px;
+      }
+    </style>
+  </defs>
+  <g>
+    <rect class="cls-1" x="12" y="12" width="1000" height="1000" rx="24" ry="24"/>
+    <rect class="cls-3" x="12" y="12" width="1000" height="1000" rx="24" ry="24"/>
+  </g>
+  <text class="cls-2" transform="translate(35.84 675.58)"><tspan x="0" y="0">New</tspan></text>
+</svg>

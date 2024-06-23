@@ -16,15 +16,18 @@ async function get_songs() {
             document.body.appendChild(document.createElement("br"));
             songs_container = div;
         }
+        const a = document.createElement("a");
         const div = document.createElement("div");
         const image = document.createElement("img");
         const span = document.createElement("span");
 
+        a.href = "./songs/" + song["song_id"];
         image.src = "images/" + song["icon"];
         span.innerText = song["name"];
 
+        a.appendChild(span);
         div.appendChild(image);
-        div.appendChild(span);
+        div.appendChild(a);
 
         songs_container.appendChild(div);
 

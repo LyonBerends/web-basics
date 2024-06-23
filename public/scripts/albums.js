@@ -16,15 +16,18 @@ async function get_albums() {
             document.body.appendChild(document.createElement("br"));
             album_container = div;
         }
+        const a = document.createElement("a");
         const div = document.createElement("div");
         const image = document.createElement("img");
         const span = document.createElement("span");
 
+        a.href = "./albums/" + album["album_id"];
         image.src = "images/" + album["icon"];
         span.innerText = album["name"];
 
+        a.appendChild(span);
         div.appendChild(image);
-        div.appendChild(span);
+        div.appendChild(a);
 
         album_container.appendChild(div);
 

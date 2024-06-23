@@ -1,1 +1,0 @@
-flexbox of flexgrid voor afbeeldingen met text

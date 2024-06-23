@@ -41,7 +41,12 @@ header > button > a {
     margin: 0px;
 }
 
-body > h1 {
+h1 {
+    text-align: center;
+    color: #E07A5F;
+}
+
+h2 {
     text-align: center;
     color: #E07A5F;
 }
@@ -70,6 +75,14 @@ body > h1 {
     color: #3D405B;
 }
 
+.flex-container > div > a > span {
+    margin: 0px;
+    padding: 0px;
+    display: block;
+    color: #3D405B;
+}
+
+
 .flex-container > h1 {
     margin: auto;
     vertical-align: top;
@@ -79,4 +92,39 @@ body > h1 {
 
 .flex-container > div > img {
     width: 100%;
+}
+
+.left-div {
+    width: 80%;
+    align-self: center;
+    margin: auto;
+    display: flex;
+    flex-wrap: nowrap;
+    border: 0.3em solid #E07A5F;
+    background-color: #F2CC8F;
+}
+
+.left-div > div {
+    width: 10em;
+    margin: 1em;
+    text-align: center;
+    font-size: 1em;
+}
+
+.left-div  > div > span {
+    margin: 0px;
+    padding: 0px;
+    display: block;
+    color: #3D405B;
+}
+
+.left-div  > div > img {
+    width: 100%;
+}
+
+.solid-button {
+    width: 100%;
+    border: 0.3em solid #3D405B;
+    background-color: #E07A5F;
+    align-self: auto;
 }

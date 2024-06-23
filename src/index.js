@@ -9,6 +9,21 @@ app.use(express.static('../public'));
 app.use('/images', express.static('../images'));
 app.use(express.json());
 
+
+
+app.get('/albums/:query', (req, res) => {
+  res.sendFile(__dirname.replace("src", "public/album.html"));
+});
+
+app.get('/songs/:query', (req, res) => {
+  res.sendFile(__dirname.replace("src", "public/song.html"));
+});
+
+app.get('/artists/:query', (req, res) => {
+  res.sendFile(__dirname.replace("src", "public/artist.html"));
+});
+
+
 app.get('/api/artists/:query', (req, res) => {
   if(req.params.query === "recommended") {
     res.send(db.get_artist.all(8))
@@ -32,6 +47,14 @@ app.get('/api/albums/:query', (req, res) => {
     const album = db.get_album.from_id(req.params.query);
     res.send(album);
   }
+});
+
+app.get('/api/albums/songs/:query', (req, res) => {
+  res.send(db.get_song.from_album_id(req.params.query));
+});
+
+app.get('/api/artists/albums/:query', (req, res) => {
+  res.send(db.get_album.from_artist_id(req.params.query));
 });
 
 app.get('/api/songs/:query', (req, res) => {
@@ -63,6 +86,7 @@ app.post('/api/albums', (req, res) => {
   if(req.headers['content-type'] === 'json' || req.headers['content-type'] === 'application/json') {
     const name = req.body["name"];
     const artist_id = req.body["artist_id"];
+    const release_date = req.body["release_date"];
     const icon = req.body["icon"];
     if(!name || !artist_id) { return res.sendStatus(400); }
     res.send(db.new_album(name, artist_id, icon));
@@ -110,7 +134,7 @@ app.put('/api/albums/:query', (req, res) => {
     const ret = db.edit_album(album_id, name, release_date, icon, artist_id);
     if(ret === 404) {res.sendStatus(404);}
     else {res.send(ret);}
-  }else {res.sendStatus(400);}
+    }else {res.sendStatus(400);}
 });
 
 app.put('/api/songs/:query', (req, res) => {
