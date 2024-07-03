@@ -1,3 +1,4 @@
-cd ./src    
+cd ./src
+call npm i
 node index.mjs 
 cd ..
