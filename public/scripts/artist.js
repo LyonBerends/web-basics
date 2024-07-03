@@ -1,5 +1,6 @@
-const host = window.location.origin.slice(0, window.location.origin.length - window.location.port.length) + "3000";
-const artist_id = window.location.pathname.slice(9);
+// const host = window.location.origin.slice(0, window.location.origin.length - window.location.port.length) + "3000";
+const host = "http://127.0.0.1:3000";
+const artist_id = (new URL(window.location)).searchParams.get("id");
 
 const main_container = document.getElementById("left-div");
 let song_container = document.getElementById("songs");
@@ -7,7 +8,16 @@ let song_container = document.getElementById("songs");
 async function load_album() {
     console.log(`${host}/api/artists/${artist_id}`);
     const artist = await fetch(`${host}/api/artists/${artist_id}`);
-    const artist_json = await artist.json();
+    var artist_json = await artist.json();
+
+    if(artist_json.status === 404) {
+        artist_json = {
+            "artist_id": artist_id,
+            "name":"404 Artist Not Found",
+            "icon":"404.png",
+            "status": 404
+        }
+    }
 
     const albums = await fetch(`${host}/api/artists/albums/${artist_id}`);
     const albums_json = await albums.json();
@@ -40,7 +50,7 @@ async function load_album() {
         deleteArtist(artist_id);
     };
 
-    image.src = "../images/" + artist_json["icon"];
+    image.src = "./images/" + artist_json["icon"];
     name_input.id = "name_input";
     name_input.type = "text";
     name_input.value = artist_json["name"];
@@ -82,8 +92,8 @@ async function load_album() {
         const image = document.createElement("img");
         const span = document.createElement("span");
 
-        a.href = "../albums/" + album["album_id"];
-        image.src = "../images/" + album["icon"];
+        a.href = "./albums?id=" + album["album_id"];
+        image.src = "./images/" + album["icon"];
         span.innerText = album["name"];
 
         a.appendChild(span);

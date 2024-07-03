@@ -1,4 +1,5 @@
-const host = window.location.origin.slice(0, window.location.origin.length - window.location.port.length) + "3000";
+// const host = window.location.origin.slice(0, window.location.origin.length - window.location.port.length) + "3000";
+const host = "http://127.0.0.1:3000";
 
 let songs_container = document.getElementById("songs");
 
@@ -21,8 +22,8 @@ async function get_songs() {
         const image = document.createElement("img");
         const span = document.createElement("span");
 
-        a.href = "./songs/" + song["song_id"];
-        image.src = "images/" + song["icon"];
+        a.href = "./song.html?id=" + song["song_id"];
+        image.src = "./images/" + song["icon"];
         span.innerText = song["name"];
 
         a.appendChild(span);

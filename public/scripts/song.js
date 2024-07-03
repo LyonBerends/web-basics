@@ -1,12 +1,25 @@
-const host = window.location.origin.slice(0, window.location.origin.length - window.location.port.length) + "3000";
-const song_id = window.location.pathname.slice(7);
+// const host = window.location.origin.slice(0, window.location.origin.length - window.location.port.length) + "3000";
+const host = "http://127.0.0.1:3000";
+const song_id = (new URL(window.location)).searchParams.get("id");
 
 const main_container = document.getElementById("left-div");
 
 async function load_album() {
     console.log(`${host}/api/songs/${song_id}`);
     const song = await fetch(`${host}/api/songs/${song_id}`);
-    const song_json = await song.json();
+    var song_json = await song.json();
+
+    if(song_json.status === 404) {
+        song_json = {
+            "song_id":song_id,
+            "name":"404 Song Not Found",
+            "duration":"4:04",
+            "lyrics":"404 Not Found",
+            "icon":"404.png",
+            "album_id":0,
+            "status":404
+        }
+    }
 
     const name = song_json.name;
     document.getElementById("name").innerText = name;
@@ -38,7 +51,7 @@ async function load_album() {
         deleteSong();
     };
 
-    image.src = "../images/" + song_json["icon"];
+    image.src = "./images/" + song_json["icon"];
     name_input.id = "name_input";
     name_input.type = "text";
     name_input.value = song_json["name"];

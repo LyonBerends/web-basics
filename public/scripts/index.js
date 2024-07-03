@@ -1,4 +1,5 @@
-const host = window.location.origin.slice(0, window.location.origin.length - window.location.port.length) + "3000";
+// const host = window.location.origin.slice(0, window.location.origin.length - window.location.port.length) + "3000";
+const host = "http://127.0.0.1:3000"
 
 let container = document.getElementById("albums");
 
@@ -15,10 +16,10 @@ async function get_recommended_albums() {
         const span = document.createElement("span");
         const a = document.createElement("a");
 
-        image.src = "images/" + album["icon"];
+        image.src = "./images/" + album["icon"];
         span.innerText = album["name"];
 
-        a.href = "./albums/" + album["album_id"];
+        a.href = "./album.html?id=" + album["album_id"];
 
         a.appendChild(span);
         div.appendChild(image);
@@ -35,10 +36,10 @@ async function get_recommended_albums() {
         const span = document.createElement("span");
         const a = document.createElement("a");
 
-        image.src = "images/" + artist["icon"];
+        image.src = "./images/" + artist["icon"];
         span.innerText = artist["name"];
 
-        a.href = "./artists/" + artist["artist_id"];
+        a.href = "./artist.html?id=" + artist["artist_id"];
 
         a.appendChild(span);
         div.appendChild(image);

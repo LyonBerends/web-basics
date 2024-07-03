@@ -1,4 +1,5 @@
-const host = window.location.origin.slice(0, window.location.origin.length - window.location.port.length) + "3000";
+// const host = window.location.origin.slice(0, window.location.origin.length - window.location.port.length) + "3000";
+const host = "http://127.0.0.1:3000";
 
 let album_container = document.getElementById("albums");
 
@@ -21,8 +22,8 @@ async function get_albums() {
         const image = document.createElement("img");
         const span = document.createElement("span");
 
-        a.href = "./albums/" + album["album_id"];
-        image.src = "images/" + album["icon"];
+        a.href = "./album.html?id=" + album["album_id"];
+        image.src = "./images/" + album["icon"];
         span.innerText = album["name"];
 
         a.appendChild(span);
