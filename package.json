@@ -2,10 +2,12 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "web-basics backend",
-  "main": "index.js",
+  "main": "src/index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch src/index.js"
+    "start": "cd src && node index.js",
+    "dev": "cd src && node --watch index.js"
   },
   "author": "",
   "license": "ISC",

@@ -15,7 +15,7 @@ const new_artist = function(name, icon="missing.png") {
 
 const new_album = function(name, artist_id, icon="missing.png", release_date="null") {
     try {
-        const stmt = db.prepare("INSERT INTO Album (artist_id, name, icon, release_date) VALUES (?, ?, ?)");
+        const stmt = db.prepare("INSERT INTO Album (artist_id, name, icon, release_date) VALUES (?, ?, ?, ?)");
         stmt.run(artist_id, name, icon, release_date);
         return db.prepare("SELECT * FROM Album ORDER BY album_id DESC limit 1").get();
     }

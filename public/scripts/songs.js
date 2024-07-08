@@ -4,11 +4,11 @@ const host = "http://127.0.0.1:3000";
 let songs_container = document.getElementById("songs");
 
 async function get_songs() {
-    let songs = await fetch(`${host}/api/songs/all`);
+    let songs = await fetch(`${host}/api/songs?sort=all`);
     let json = await songs.json();
 
     let i = 0;
-    for (let song of json) {
+    for (let song of json.songs) {
         if(i % 8 === 0) {
             const div = document.createElement("div");
             div.className = "flex-container";

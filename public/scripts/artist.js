@@ -5,9 +5,8 @@ const artist_id = (new URL(window.location)).searchParams.get("id");
 const main_container = document.getElementById("left-div");
 let song_container = document.getElementById("songs");
 
-async function load_album() {
-    console.log(`${host}/api/artists/${artist_id}`);
-    const artist = await fetch(`${host}/api/artists/${artist_id}`);
+async function load_artist() {
+    const artist = await fetch(`${host}/api/artist/${artist_id}`);
     var artist_json = await artist.json();
 
     if(artist_json.status === 404) {
@@ -19,7 +18,7 @@ async function load_album() {
         }
     }
 
-    const albums = await fetch(`${host}/api/artists/albums/${artist_id}`);
+    const albums = await fetch(`${host}/api/artist/albums/${artist_id}`);
     const albums_json = await albums.json();
 
     const name = artist_json.name;
@@ -92,7 +91,7 @@ async function load_album() {
         const image = document.createElement("img");
         const span = document.createElement("span");
 
-        a.href = "./albums?id=" + album["album_id"];
+        a.href = "./album.html?id=" + album["album_id"];
         image.src = "./images/" + album["icon"];
         span.innerText = album["name"];
 
@@ -127,14 +126,14 @@ async function editArtist()
 {
     const data = getArtistData();
 
-    const request = await(fetch(`${host}/api/artists/${artist_id}`, {method: "PUT", headers: {'Content-type': 'application/json'}, body: JSON.stringify(data)}));
+    const request = await(fetch(`${host}/api/artist/${artist_id}`, {method: "PUT", headers: {'Content-type': 'application/json'}, body: JSON.stringify(data)}));
     alert(await request.statusText);
 }
 
 async function newArtist() {
     const data = getArtistData();
 
-    const request = await(fetch(`${host}/api/artists`, {method: "POST", headers: {'Content-type': 'application/json'}, body: JSON.stringify(data)}));
+    const request = await(fetch(`${host}/api/artist`, {method: "POST", headers: {'Content-type': 'application/json'}, body: JSON.stringify(data)}));
     alert(await request.statusText);
 }
 
@@ -146,8 +145,8 @@ function quickSpan(text)
 }
 
 async function deleteArtist(album_id) {
-    const request = await(fetch(`${host}/api/artists/${album_id}`, {method: "DELETE"}));
+    const request = await(fetch(`${host}/api/artist/${album_id}`, {method: "DELETE"}));
     alert(await request.statusText);
 }
 
-load_album();
+load_artist();

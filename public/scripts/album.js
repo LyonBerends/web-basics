@@ -7,7 +7,7 @@ let song_container = document.getElementById("songs");
 
 async function load_album() {
     console.log(`${host}/api/albums/${album_id}`);
-    const album = await fetch(`${host}/api/albums/${album_id}`);
+    const album = await fetch(`${host}/api/album/${album_id}`);
     var album_json = await album.json();
 
     if(album_json.status === 404) {
@@ -21,10 +21,10 @@ async function load_album() {
         }
     }
 
-    const artist = await fetch(`${host}/api/artists/${album_json["artist_id"]}`);
+    const artist = await fetch(`${host}/api/artist/${album_json["artist_id"]}`);
     const artist_json = await artist.json();
 
-    const songs = await fetch(`${host}/api/albums/songs/${album_id}`);
+    const songs = await fetch(`${host}/api/album/songs/${album_id}`);
     const songs_json = await songs.json();
 
     const name = album_json.name;
@@ -147,7 +147,7 @@ async function editAlbum()
 {
     const data = getAlbumData();
 
-    const request = await(fetch(`${host}/api/albums/${album_id}`, {method: "PUT", headers: {'Content-type': 'application/json'}, body: JSON.stringify(data)}));
+    const request = await(fetch(`${host}/api/album/${album_id}`, {method: "PUT", headers: {'Content-type': 'application/json'}, body: JSON.stringify(data)}));
     alert(await request.statusText);
 }
 
@@ -155,7 +155,7 @@ async function newAlbum()
 {
     const data = getAlbumData();
 
-    const request = await(fetch(`${host}/api/albums`, {method: "POST", headers: {'Content-type': 'application/json'}, body: JSON.stringify(data)}));
+    const request = await(fetch(`${host}/api/album`, {method: "POST", headers: {'Content-type': 'application/json'}, body: JSON.stringify(data)}));
     alert(await request.statusText);
 }
 
@@ -167,7 +167,7 @@ function quickSpan(text)
 }
 
 async function deleteAlbum(album_id) {
-    const request = await(fetch(`${host}/api/albums/${album_id}`, {method: "DELETE"}));
+    const request = await(fetch(`${host}/api/album/${album_id}`, {method: "DELETE"}));
     alert(await request.statusText);
 }
 

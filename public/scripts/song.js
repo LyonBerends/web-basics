@@ -5,8 +5,7 @@ const song_id = (new URL(window.location)).searchParams.get("id");
 const main_container = document.getElementById("left-div");
 
 async function load_album() {
-    console.log(`${host}/api/songs/${song_id}`);
-    const song = await fetch(`${host}/api/songs/${song_id}`);
+    const song = await fetch(`${host}/api/song/${song_id}`);
     var song_json = await song.json();
 
     if(song_json.status === 404) {
@@ -103,7 +102,7 @@ function quickSpan(text)
 }
 
 async function deleteSong() {
-    const request = await(fetch(`${host}/api/songs/${song_id}`, {method: "DELETE"}));
+    const request = await(fetch(`${host}/api/song/${song_id}`, {method: "DELETE"}));
     alert(await request.statusText);
 }
 
@@ -133,7 +132,7 @@ async function editSong()
 {
     const data = getSongData();
 
-    const request = await(fetch(`${host}/api/songs/${song_id}`, {method: "PUT", headers: {'Content-type': 'application/json'}, body: JSON.stringify(data)}));
+    const request = await(fetch(`${host}/api/song/${song_id}`, {method: "PUT", headers: {'Content-type': 'application/json'}, body: JSON.stringify(data)}));
     alert(await request.statusText);
 }
 
@@ -141,7 +140,7 @@ async function newSong()
 {
     const data = getSongData();
 
-    const request = await(fetch(`${host}/api/songs`, {method: "POST", headers: {'Content-type': 'application/json'}, body: JSON.stringify(data)}));
+    const request = await(fetch(`${host}/api/song`, {method: "POST", headers: {'Content-type': 'application/json'}, body: JSON.stringify(data)}));
 
     if(await request.status === 500)
     {

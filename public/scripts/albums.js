@@ -4,11 +4,13 @@ const host = "http://127.0.0.1:3000";
 let album_container = document.getElementById("albums");
 
 async function get_albums() {
-    let recommended_albums = await fetch(`${host}/api/albums/all`);
+    let recommended_albums = await fetch(`${host}/api/albums?sort=all`);
     let json = await recommended_albums.json();
 
+    if(json.status !== 200) {alert(`Something wen't wrong: ${json.status}`);}
+
     let i = 0;
-    for (let album of json) {
+    for (let album of json.albums) {
         if(i % 8 === 0) {
             const div = document.createElement("div");
             div.className = "flex-container";
