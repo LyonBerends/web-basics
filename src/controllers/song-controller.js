@@ -1,4 +1,4 @@
-import {delete_song, edit_song, get_song, new_song} from "./database-queries.js";
+import {delete_artist, delete_song, edit_song, get_song, new_song} from "./database-queries.js";
 
 export function getSong(req, res) {
     if(req.params.id.match(/[a-zA-Z]/gm) !== null) {res.status(400).send({"status": 400});}
@@ -50,5 +50,6 @@ export function putSong(req, res) {
 }
 
 export function deleteSong(req, res) {
-    res.send(delete_song(req.params.query));
+    const deletion = delete_song(req.params.query);
+    res.status(deletion.status).send(deletion);
 }

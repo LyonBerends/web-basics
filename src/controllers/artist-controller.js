@@ -1,4 +1,4 @@
-import {delete_artist, edit_artist, get_album, get_artist, new_artist} from "./database-queries.js";
+import {delete_album, delete_artist, edit_artist, get_album, get_artist, new_artist} from "./database-queries.js";
 
 export function getArtist(req, res) {
     if(req.params.id.match(/[a-zA-Z]/gm) !== null) {res.status(400).send({"status": 400});}
@@ -43,5 +43,6 @@ export function putArtist(req, res) {
     }else {res.status(400).send({'status': 400});}
 }
 export function deleteArtist(req, res) {
-    res.send(delete_artist(req.params.query));
+    const deletion = delete_artist(req.params.query);
+    res.status(deletion.status).send(deletion);
 }

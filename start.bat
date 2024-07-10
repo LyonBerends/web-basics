@@ -1,4 +1,3 @@
-cd ./src
 call npm i
-node index.mjs 
+npm start
 cd ..

@@ -52,5 +52,6 @@ export function putAlbum(req, res) {
 }
 
 export function deleteAlbum(req, res) {
-    res.send(delete_album(req.params.query));
+    const deletion = delete_album(req.params.query);
+    res.status(deletion.status).send(deletion);
 }

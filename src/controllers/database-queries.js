@@ -105,7 +105,7 @@ const delete_album = function(id) {
     catch(e) {
         return {'status': 500}
     }
-    return {'status': 200}
+    return {'status': 200};
 }
 
 const delete_song = function(id) {
