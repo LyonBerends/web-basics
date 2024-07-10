@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS Album (
+    album_id     INTEGER PRIMARY KEY AUTOINCREMENT,
+    name         TEXT    NOT NULL,
+    release_date TEXT,
+    icon         TEXT,
+    artist_id    INTEGER REFERENCES Artist (artist_id)
+);
+
+CREATE TABLE IF NOT EXISTS Artist (
+    artist_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name      TEXT    NOT NULL,
+    icon      TEXT
+);
+
+CREATE TABLE IF NOT EXISTS Song (
+    song_id  INTEGER PRIMARY KEY AUTOINCREMENT,
+    name     TEXT    NOT NULL,
+    duration TEXT,
+    lyrics   TEXT,
+    icon     TEXT,
+    album_id INTEGER REFERENCES Album (album_id)
+);

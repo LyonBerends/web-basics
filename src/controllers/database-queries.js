@@ -1,42 +1,44 @@
 // const Database = require('better-sqlite3');
-import Database from 'better-sqlite3';
-const db = new Database('../database.db');
+import {db} from './database.js';
 
 const new_artist = function(name, icon="missing.png") {
+    if(name == null || icon == null) {return {'status': 400}}
     try {
         const stmt = db.prepare("INSERT INTO Artist (name, icon) VALUES (?, ?)");
         stmt.run(name, icon);
         return db.prepare("SELECT * FROM Artist ORDER BY artist_id DESC limit 1").get();
     }
     catch (e) {
-        return e;
+        return {'status': 500};
     }
 }
 
 const new_album = function(name, artist_id, icon="missing.png", release_date="null") {
+    if(name == null || artist_id == null) {return {'status': 400}}
     try {
         const stmt = db.prepare("INSERT INTO Album (artist_id, name, icon, release_date) VALUES (?, ?, ?, ?)");
         stmt.run(artist_id, name, icon, release_date);
         return db.prepare("SELECT * FROM Album ORDER BY album_id DESC limit 1").get();
     }
     catch (e) {
-        return e;
+        return {'status': 500};
     }
 }
 
 const new_song = function(name, duration, album_id, lyrics = "null", icon="missing.png") {
+    if(name == null || duration == null || album_id == null) {return {'status': 400}}
     try {
         const stmt = db.prepare("INSERT INTO Song (name, duration, album_id, lyrics, icon) VALUES (?, ?, ?, ?, ?)");
         stmt.run(name, duration, album_id, lyrics, icon);
         return db.prepare("SELECT * FROM Song ORDER BY song_id DESC limit 1").get();
     }
     catch (e) {
-        return e;
+        return {'status': 500};
     }
 }
 
 const edit_artist = function(id, name, icon=null) {
-    if(db.prepare("SELECT count(*) count FROM Artist WHERE artist_id = ?").get(id)["count"] === 0) {return 404;}
+    if(db.prepare("SELECT count(*) count FROM Artist WHERE artist_id = ?").get(id)["count"] === 0) {return {'status': 404};}
     if(icon === null) {
         db.prepare("UPDATE Artist SET name = ? WHERE artist_id = ?").run(name, id);
     } else {
@@ -46,7 +48,7 @@ const edit_artist = function(id, name, icon=null) {
 }
 
 const edit_album = function(id, name, release_date=null, icon=null, artist_id=null) {
-    if(db.prepare("SELECT count(*) count FROM Album WHERE album_id = ?").get(id)["count"] === 0) {return 404;}
+    if(db.prepare("SELECT count(*) count FROM Album WHERE album_id = ?").get(id)["count"] === 0) {return {'status': 404};}
     if(release_date === null) {
         db.prepare("UPDATE Album SET name = ? WHERE album_id = ?").run(name, id);
     }
@@ -63,7 +65,7 @@ const edit_album = function(id, name, release_date=null, icon=null, artist_id=nu
 }
 
 const edit_song = function(id, name, lyrics=null, duration=null, icon=null, album_id=null) {
-    if(db.prepare("SELECT count(*) count FROM Song WHERE song_id = ?").get(id)["count"] === 0) {return 404;}
+    if(db.prepare("SELECT count(*) count FROM Song WHERE song_id = ?").get(id)["count"] === 0) {return {'status': 404};}
     if(lyrics === null) {
         db.prepare("UPDATE Song SET name = ? WHERE song_id = ?").run(name, id);
     }
@@ -84,23 +86,38 @@ const edit_song = function(id, name, lyrics=null, duration=null, icon=null, albu
 
 const delete_artist = function(id) {
     if(db.prepare("SELECT count(*) count FROM Artist WHERE artist_id = ?").get(id)["count"] === 0) {return 404;}
-    const stmt = db.prepare("DELETE FROM Artist WHERE artist_id = ?");
-    stmt.run(id);
-    return 200;
+    try {
+        const stmt = db.prepare("DELETE FROM Artist WHERE artist_id = ?");
+        stmt.run(id);
+    }
+    catch(e) {
+        return {'status': 500}
+    }
+    return {'status': 200}
 }
 
 const delete_album = function(id) {
     if(db.prepare("SELECT count(*) count FROM Album WHERE album_id = ?").get(id)["count"] === 0) {return 404;}
-    const stmt = db.prepare("DELETE FROM Album WHERE album_id = ?");
-    stmt.run(id);
-    return 200;
+    try {
+        const stmt = db.prepare("DELETE FROM Album WHERE album_id = ?");
+        stmt.run(id);
+    }
+    catch(e) {
+        return {'status': 500}
+    }
+    return {'status': 200}
 }
 
 const delete_song = function(id) {
     if(db.prepare("SELECT count(*) count FROM Song WHERE song_id = ?").get(id)["count"] === 0) {return 404;}
-    const stmt = db.prepare("DELETE FROM Song WHERE song_id = ?");
-    stmt.run(id);
-    return 200;
+    try {
+        const stmt = db.prepare("DELETE FROM Song WHERE song_id = ?");
+        stmt.run(id);
+    }
+    catch(e) {
+        return {'status': 500}
+    }
+    return {'status': 200}
 }
 
 const get_artist = {

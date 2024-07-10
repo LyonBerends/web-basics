@@ -1,10 +1,10 @@
-import {delete_album, edit_album, get_album, get_song, new_album, new_artist} from "../database.js";
+import {delete_album, edit_album, get_album, get_song, new_album, new_artist} from "./database-queries.js";
 
 export function getAlbums(req, res) {
-    if(req.query.sort === "all" || req.query.sort === undefined) {
+    if(req.query.get === "all") {
         let albums = get_album.all();
         res.status(200).send({'albums': albums, 'status': 200});
-    } else if(req.query.sort === "recommended") {
+    } else if(req.query.get === "recommended") {
         let albums = get_album.all(8);
         res.status(200).send({'albums': albums, 'status': 200});
     } else {
@@ -13,6 +13,8 @@ export function getAlbums(req, res) {
 }
 
 export function getAlbum(req, res) {
+    if(req.params.id.match(/[a-zA-Z]/gm) !== null) {res.status(400).send({"status": 400});}
+
     const album = get_album.from_id(req.params.id);
     res.status(album.status).send(album);
 }
@@ -27,12 +29,12 @@ export function postAlbum(req, res) {
         const artist_id = req.body["artist_id"];
         const release_date = req.body["release_date"];
         const icon = req.body["icon"];
-        if(!name || !artist_id) { return res.sendStatus(400); }
+        if(!name || !artist_id) { return res.status(400).send({'status': 400}); }
         res.send(new_album(name, artist_id, icon, release_date));
     }
     else
     {
-        res.sendStatus(400);
+        res.status(400).send({'status': 400});
     }
 }
 
@@ -46,7 +48,7 @@ export function putAlbum(req, res) {
         const ret = edit_album(album_id, name, release_date, icon, artist_id);
         if(ret === 404) {res.sendStatus(404);}
         else {res.send(ret);}
-    } else {res.sendStatus(400);}
+    } else {res.status(400).send({'status': 400});}
 }
 
 export function deleteAlbum(req, res) {

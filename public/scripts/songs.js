@@ -4,7 +4,7 @@ const host = "http://127.0.0.1:3000";
 let songs_container = document.getElementById("songs");
 
 async function get_songs() {
-    let songs = await fetch(`${host}/api/songs?sort=all`);
+    let songs = await fetch(`${host}/api/songs?get=all`);
     let json = await songs.json();
 
     let i = 0;

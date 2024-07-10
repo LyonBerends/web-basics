@@ -1,6 +1,6 @@
-// const db = require('./database.js');
+// const db = require('./database-queries.js');
 
-import {get_artist, get_album, get_song, delete_album, delete_song, delete_artist, edit_album, edit_song, edit_artist, new_album, new_song, new_artist} from './database.js';
+import {get_artist, get_album, get_song, delete_album, delete_song, delete_artist, edit_album, edit_song, edit_artist, new_album, new_song, new_artist} from './controllers/database-queries.js';
 
 import express from 'express';
 import artistRouter from "./routers/artist-router.js";
@@ -9,6 +9,9 @@ import albumsRouter from "./routers/albums-router.js";
 import albumRouter from "./routers/album-router.js";
 import songsRouter from "./routers/songs-router.js";
 import songRouter from "./routers/song-router.js";
+import {startDatabase} from "./controllers/database.js";
+
+startDatabase();
 
 const app = express()
 

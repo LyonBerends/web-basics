@@ -1,0 +1,7 @@
+{
+  "queries": [
+    {"query":  "CREATE TABLE IF NOT EXISTS Album (\n    album_id     INTEGER PRIMARY KEY AUTOINCREMENT,\n    name         TEXT    NOT NULL,\n    release_date TEXT,\n    icon         TEXT,\n    artist_id    INTEGER REFERENCES Artist (artist_id)\n);"},
+    {"query":  "CREATE TABLE IF NOT EXISTS Artist (\n    artist_id INTEGER PRIMARY KEY AUTOINCREMENT,\n    name      TEXT    NOT NULL,\n    icon      TEXT\n);"},
+    {"query":  "CREATE TABLE IF NOT EXISTS Song (\n    song_id  INTEGER PRIMARY KEY AUTOINCREMENT,\n    name     TEXT    NOT NULL,\n    duration TEXT,\n    lyrics   TEXT,\n    icon     TEXT,\n    album_id INTEGER REFERENCES Album (album_id)\n);"}
+  ]
+}

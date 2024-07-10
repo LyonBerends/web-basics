@@ -4,10 +4,10 @@ const host = "http://127.0.0.1:3000"
 let container = document.getElementById("albums");
 
 async function get_recommended_albums() {
-    const recommended_albums = await fetch(`${host}/api/albums?sort=recommended`);
+    const recommended_albums = await fetch(`${host}/api/albums?get=recommended`);
     const recommended_albums_json = await recommended_albums.json();
 
-    const recommended_artists = await fetch(`${host}/api/artists?sort=recommended`);
+    const recommended_artists = await fetch(`${host}/api/artists?get=recommended`);
     const recommended_artists_json = await recommended_artists.json();
 
     for (let album of recommended_albums_json.albums) {
